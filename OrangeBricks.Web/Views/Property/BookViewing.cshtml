@@ -1,0 +1,36 @@
+﻿@model OrangeBricks.Web.Controllers.Property.ViewModels.BookViewingViewModel
+@{
+    ViewBag.Title = "Book Viewing Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Book Viewing</h2>
+<p>Please select an appointment date and time for the @Model.PropertyType on @Model.StreetName</p>
+
+@using (Html.BeginForm("BookViewing", "Property", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Appointment, "Appointment Date", new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
+            @Html.Hidden("PropertyId", Model.PropertyId)
+            @Html.Hidden("BuyerUserId", Model.BuyerUserId)
+
+            @Html.TextBoxFor(m => m.Appointment, new { @id = "datetimePicker", @class = "form-control", @type="text" })
+          </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit Request" />
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $('#datetimePicker').datetimepicker({
+                dateFormat: 'dd/mm/yy',
+                timeFormat: 'HH:mm'
+            });
+        });
+    })
+</script>

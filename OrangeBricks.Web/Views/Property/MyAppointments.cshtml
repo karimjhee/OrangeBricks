@@ -1,0 +1,44 @@
+﻿@model OrangeBricks.Web.Controllers.Property.ViewModels.MyAppointmentsViewModel
+
+@{
+    ViewBag.Title = "My Appointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<p>Here you can see the status of any appointments that you have requested on any property.</p>
+
+@foreach (var property in Model.PropertyAppointments)
+{
+    <p><strong>Property type:</strong> @property.PropertyType</p>
+    <p><strong>Number of bedrooms:</strong> @property.NumberOfBedrooms</p>
+    <p><strong>Street name:</strong> @property.StreetName</p>
+    if (property.HasBookings)
+    {
+        foreach (var appointment in @property.Appointments)
+        {
+            <hr />
+            <div>
+                <p><strong>Appointment At: </strong> 
+                    @appointment.Appointment.ToShortDateString() for @appointment.Appointment.ToShortTimeString()
+                </p>
+                <p><strong>Status: </strong> @appointment.Status</p>
+            </div>
+        }
+        <hr />
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            This property has no offers yet!
+        </div>
+    }
+}
+
+@if (Model.PropertyAppointments.Count() < 1)
+{
+    <div class="alert alert-info" role="alert">
+        There are no appoinments on any property yet!
+    </div>
+}
+
